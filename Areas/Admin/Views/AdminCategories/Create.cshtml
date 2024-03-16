@@ -1,0 +1,53 @@
+﻿@model WebApplication1.Models.Category
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Create</h1>
+<h4>Category</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="AdminCategories" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CatName" class="control-label"></label>
+                <input asp-for="CatName" class="form-control input-product" />
+                <span asp-validation-for="CatName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Thumb" class="control-label">Ảnh đại diện</label>
+                <input name="fThumb" asp-for="Thumb" class="form-control input-product" type="file" onchange="previewImage(this)"/>
+                <span asp-validation-for="Thumb" class="text-danger"></span>
+                <img id="thumb-preview" src="" alt="Ảnh đại diện"
+                    style="display: none; max-width: 200px; margin-top: 10px;" />
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Published" /> @Html.DisplayNameFor(model => model.Published)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function previewImage(input) {
+            var file = input.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById("thumb-preview").src = e.target.result;
+                document.getElementById("thumb-preview").style.display = "block";
+            };
+
+            reader.readAsDataURL(file);
+        }
+    </script>
+}

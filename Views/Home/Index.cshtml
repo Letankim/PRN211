@@ -1,0 +1,398 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<WebApplication1.Models.Product>
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>All departments</span>
+                    </div>
+                    <ul>
+
+                        @if (ViewBag.Categories != null && ViewBag.Categories.Count > 0)
+                        {
+                            @foreach (var category in ViewBag.Categories)
+                            {
+                                <li><a asp-action="Category" asp-controller="Product" asp-route-id="@category.CatId">@category.CatName</a></li>
+                            }
+                        }
+                        else
+                        {
+                            <p>No products found.</p>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="#">
+                            <div class="hero__search__categories">
+                                All Categories
+                                <span class="arrow_carrot-down"></span>
+                            </div>
+                            <input type="text" placeholder="What do yo u need?">
+                            <button type="submit" class="site-btn">SEARCH</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>+65 11.188.888</h5>
+                            <span>support 24/7 time</span>
+                        </div>
+                    </div>
+                </div>
+                <img src="~/images/products/Nanoflare_800_Banner.webp" />
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+<!-- Categories Section Begin -->
+<section class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="categories__slider owl-carousel">
+                @if (ViewBag.Categories != null && ViewBag.Categories.Count > 0)
+                {
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <div class="col-lg-3">
+                            <div class="categories__item set-bg">
+                                <img src="~/images/category/@category.Thumb" />
+                                <h5><a href="#">@category.CatName</a></h5>
+                            </div>
+                        </div>
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Featured Product</h2>
+                </div>
+                <div class="featured__controls">
+                    <ul>
+                        <li class="active" data-filter="*">All</li>
+
+                        @if (ViewBag.Categories != null && ViewBag.Categories.Count > 0)
+                        {
+                            <ul>
+                                @foreach (var category in ViewBag.Categories)
+                                {
+                                    <li>@category.CatName</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p>No products found.</p>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+            <div class="featured__item">
+                @if (Model != null && Model.Any(item => item.Active))
+                {
+                    @foreach (var item in Model.Where(item => item.Active))
+                    {
+                        <div class="featured__item__pic set-bg">
+                            <img src="~/images/products/@item.Thumb " />
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">@item.ProductName</a></h6>
+                            <h5>$@item.Price</h5>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No active items found.</p>
+                }
+
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+    </div>
+</section>
+<!-- Featured Section End -->
+<!-- Banner Begin -->
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="~/images/banner2.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="~/images/banner2.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner End -->
+<!-- Latest Product Section Begin -->
+<section class="latest-product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Latest Products</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="~/assetsUser/img/latest-product/lp-1.jpg" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="~/assetsUser/img/latest-product/lp-2.jpg" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="~/assetsUser/img/latest-product/lp-3.jpg" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="~/assetsUser/img/latest-product/lp-1.jpg" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="~/images/products/" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Top Rated Products</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            @if (Model != null && Model.Any(item => item.BestSellers))
+                            {
+                                @foreach (var item in Model.Where(item => item.BestSellers))
+                                {
+
+                                    <a href="#" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img src="~/images/products/@item.Thumb" alt="">
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>@item.ProductName</h6>
+                                            <span>@item.Price</span>
+                                        </div>
+                                    </a>
+                                }
+
+                            }
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            @if (Model != null && Model.Any(item => item.BestSellers))
+                            {
+                                @foreach (var item in Model.Where(item => item.BestSellers))
+                                {
+
+                                    <a href="#" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img src="~/images/products/@item.Thumb" alt="">
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>@item.ProductName</h6>
+                                            <span>@item.Price</span>
+                                        </div>
+                                    </a>
+                                }
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Review Products</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="~/assetsUser/img/latest-product/lp-1.jpg" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="~/assetsUser/img/latest-product/lp-2.jpg" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="~/assetsUser/img/latest-product/lp-3.jpg" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="~/assetsUser/img/latest-product/lp-1.jpg" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="~/assetsUser/img/latest-product/lp-2.jpg" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+                            <a href="#" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img src="~/assetsUser/img/latest-product/lp-3.jpg" alt="">
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>Crab Pool Security</h6>
+                                    <span>$30.00</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Latest Product Section End -->
+<!-- Blog Section Begin -->
+<section class="from-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title from-blog__title">
+                    <h2>From The Blog</h2>
+                </div>
+            </div>
+        </div>
+ 
+       
+
+                <div class="row">
+            @if (ViewBag.TbTinTucs != null && ViewBag.TbTinTucs.Count > 0)
+            {
+                @foreach (var tintuc in ViewBag.TbTinTucs)
+                {
+            <div class="col-lg-4 col-md-4 col-sm-6">
+               
+                        <div class="blog__item">
+                            <div class="blog__item__pic">
+                                <img src="~/images/tbTinTucs/@tintuc.Thumb" alt="">
+                            </div>
+                            <div class="blog__item__text">
+                                <ul>
+                                    <li><i class="fa fa-calendar-o"></i>@tintuc.CreatedDate</li>
+                                    <li><i class="fa fa-comment-o"></i> 5</li>
+                                </ul>
+                                <h5><a href="#">@tintuc.Title</a></h5>
+                                <p>@tintuc.Scontents </p>
+                            </div>
+                        </div>
+             
+            </div>
+                }
+            }
+
+
+                  
+
+
+    </div>
+</section>

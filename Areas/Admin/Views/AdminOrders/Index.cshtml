@@ -1,0 +1,171 @@
+﻿@model IEnumerable<WebApplication1.Models.Order>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="card-body">
+
+    <div class="table-responsive">
+
+        <p>
+        <p>
+            <a class="btn btn-primary" asp-action="Create">Create New</a>
+        </p>
+        </p>
+        <input id="keyword" name="keyword" type="text" class="form-control input-product"
+            placeholder="Tìm kiếm theo tên sản phẩm" />
+
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th> ID</th>
+                    <th> Tên sản phẩm</th>
+                    <th> Danh mục </th>
+                    <th> Giá</th>
+                    <th> Bán chạy</th>
+                    <th> Active</th>
+                    <th> Ghim</th>
+                    <th> Tồn Kho</th>
+                    <th> # </th>
+                </tr>
+            </thead>
+            <tbody id="records_table">
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+
+                    }
+                }
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+<div class="card-body">
+
+    <div class="table-responsive">
+
+        <table class="table" id="data-table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TotalMoney)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.District)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ward)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ShipDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TransactStatusId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Deleted)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Paid)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymenDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymentId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Customer)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Location)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalMoney)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.District)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ward)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShipDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TransactStatusId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Deleted)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Paid)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaymenDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaymentId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customer.CustomerId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Location.LocationId)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.OrderID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.OrderID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.OrderID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        let table = new DataTable('#data-table',{
+            responsive: true,
+            pageLength: 25,
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json',
+            },
+        });
+    </script>
+}

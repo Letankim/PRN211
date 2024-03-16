@@ -1,0 +1,28 @@
+﻿@model List<WebApplication1.ViewModels.CartItemcs>
+@if (Model != null && Model.Count() > 0)
+{
+
+
+    <div class="col-lg-3">
+        <div class="header__cart">
+
+            <ul>
+                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                <li><a asp-action="Index" asp-controller="ShoppingCart"><i class="fa fa-shopping-bag"></i> <span>@Model.Count()</span></a></li>
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+
+    <div class="col-lg-3">
+        <div class="header__cart">
+
+            <ul>
+                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                <li><a asp-action="Index" asp-controller="ShoppingCart"><i class="fa fa-shopping-bag"></i> <span>0</span></a></li>
+            </ul>
+        </div>
+    </div>
+}

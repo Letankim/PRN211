@@ -1,0 +1,10 @@
+﻿@model PagedList.Core.IPagedList<WebApplication1.ViewModels.BlogViewModel>
+
+@foreach (var blog in Model)
+{
+    <h2>@blog.PageName</h2>
+    <p>@blog.Contents</p>
+    <!-- Các thông tin khác của BlogViewModel -->
+}
+
+

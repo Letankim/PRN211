@@ -1,0 +1,38 @@
+﻿@model List<Product>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td> @item.ProductId </td>
+            <td> @item.ProductName</td>
+            <td>
+                <!-- Hiển thị hình ảnh -->
+                <img src="@item.Thumb" width="100" height="100" />
+            </td>
+
+            <td> @item.Price</td>
+            <td> @item.UnitslnStock </td>
+            <td>
+                @if (item.UnitslnStock.Value > 0)
+                {
+                    <div class="badge badge-success badge-dot m-r-10">
+                        <div>In Stock</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="badge badge-danger badge-dot m-r-10">
+                        <div>Out Stock</div>
+                    </div>
+                }
+            </td>
+            <td>
+
+                <a class="badge badge-success" asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a class="badge badge-warning" asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                <a class="badge badge-danger" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+    }
+}

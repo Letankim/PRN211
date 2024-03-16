@@ -1,0 +1,152 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<WebApplication1.Models.Product>
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh sách hàng" + CurrentPage;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<h2>@TempData["ShortDesc"]</h2>
+<span class="breadcrumb-item active"> Danh sách hàng : page @ViewBag.CurrentPage</span>
+<div class="card-body">
+    <div class="table-responsive">
+        <p>
+            <a class="btn btn-primary" asp-action="Create">Create New</a>
+        </p>
+        <table class="table table-dark" id="data-table">
+            <thead>
+                <tr>
+                    <th> ID</th>
+                    <th> Tên sản phẩm</th>
+                    <th> Danh mục </th>
+                    <th> Giá</th>
+                    <th> Bán chạy</th>
+                    <th> Active</th>
+                    <th> Ghim</th>
+                    <th> Tồn Kho</th>
+                    <th> # </th>
+                </tr>
+            </thead>
+
+            <tbody id="records_table">
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td> @item.ProductId </td>
+                            <td> @item.ProductName</td>
+                            <td>@item.Cat.CatName</td>
+                            <td> @item.Price</td>
+                            <td>
+                                @if (item.BestSellers)
+                                {
+                                    <div class="badge badge-success badge-dot m-r-10">
+                                        <div>Active</div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="badge badge-danger badge-dot m-r-10">
+                                        <div>None</div>
+                                    </div>
+                                }
+                            </td>
+                            <td> @if (item.Active)
+                                {
+                                    <div class="badge badge-success badge-dot m-r-10">
+                                        <div>Active</div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="badge badge-danger badge-dot m-r-10">
+                                        <div>Block</div>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @if (item.HomeFlag)
+                                {
+                                    <div class="badge badge-success badge-dot m-r-10">
+                                        <div>Active</div>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="badge badge-danger badge-dot m-r-10">
+                                        <div>None</div>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @if (item.UnitslnStock.HasValue && item.UnitslnStock.Value > 0)
+                                {
+                                    <div class="badge badge-success badge-dot m-r-10">
+                                        <div>@item.UnitslnStock</div>
+                                    </div>
+                                }
+
+
+                                else
+                                {
+                                    <div class="badge badge-danger badge-dot m-r-10">
+                                        <div>Out Stock</div>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+
+                                <a class="badge badge-success" asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit"
+                                    asp-route-id="@item.ProductId">Edit</a> |
+                                <a class="badge badge-warning" asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                                <a class="badge badge-danger" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            jQuery("#txtCatID").change(function () {
+                var catID = jQuery(this).children(":selected").attr("value");
+                catID = parseFloat(catID);
+                $('#txtCatID option')
+                    .removeAttr('selected');
+                $("#txtCatID >[value=" + catID + "]").attr("selected","true");
+                $ajax({
+                    url: 'Admin/AdminProducts/Filtter',
+                    datatype: "json",
+                    type: "GET",
+                    date: {
+                        CatID: catID
+                    },
+                    async: true,
+                    success: function (results) {
+                        if (result.status == "success") {
+                            window.location.href = results.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        let table = new DataTable('#data-table',{
+            responsive: true,
+            pageLength: 25,
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json',
+            },
+        });
+    </script>
+}

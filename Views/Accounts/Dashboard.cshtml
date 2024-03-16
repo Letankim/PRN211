@@ -1,0 +1,144 @@
+﻿@model WebApplication1.Models.Customer
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link href="~/assetsUser/css/Profile.css" rel="stylesheet">
+<body>
+    <div class="main-content">
+        <!-- Top navbar -->
+      
+        <!-- Header -->
+   
+        <!-- Page content -->
+        <div class="container-fluid mt--7">
+            <div class="row">
+
+                <div class="col-xl-8 order-xl-1 mx-auto"">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                               
+                                    <span class="avatar avatar-sm rounded-circle">
+                                        <img alt="Image placeholder" src="./images/products/@Model.Avatar">
+                                    </span>
+                                    <div class="media-body ml-2 d-none d-lg-block">
+                                        <span class="mb-0 text-sm  font-weight-bold">@Model.FullName</span>
+                                    </div>
+                               
+                                <div class="col-4 text-right">
+                                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-controller="Accounts" asp-route-id="@Model.CustomerId">Edit profile</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <h6 class="heading-small text-muted mb-4">User information</h6>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-username">FullName</label>
+                                                <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="@Model.FullName" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Email address</label>
+                                                <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="jesse@example.com" value="@Model.Email"  readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-first-name">Birthday</label>
+                                                <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="@Model.Birthday" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-last-name">Phone</label>
+                                                <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="@Model.Phone" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <!-- Address -->
+                                <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-address">Address</label>
+                                                <input id="input-address" class="form-control form-control-alternative" placeholder="" value="@Model.Address" readonly type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-city">District</label>
+                                                <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="District" value="@Model.District" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-country">Ward</label>
+                                                <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Ward" value="@Model.Ward" readonly > 
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-country">Postal code</label>
+                                                <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <!-- Description -->
+                              
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="row align-items-center justify-content-xl-between">
+            <div class="col-xl-6 m-auto text-center">
+                <div class="copyright">
+                    <p>Made with <a href="https://www.creative-tim.com/product/argon-dashboard" target="_blank">Argon Dashboard</a> by Creative Tim</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+@section Scripts {
+<script>
+    $(document).ready(functio(){
+        $(".xemdonhang").click(function () {
+            var madonhang = $(this).attr("data-madonhang")
+            $.ajax({
+                url: '/DonHang/Details',
+                dataType: "json",
+                type: "POST",
+                data: { id: madonhang },
+                async: true,
+                success: function (results) {
+                    $("#records_table").html("");
+                    $("#records_table").html(results);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        });
+    });
+</script>
+}

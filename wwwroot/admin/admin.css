@@ -1,0 +1,68 @@
+﻿
+.content-wrapper {
+    background-color: #ffffff !important;
+}
+.sidebar {
+    background-color: #ffffff !important;
+}
+    .sidebar .nav .nav-item.active > .nav-link {
+        background-color: #e8e8e8 !important;
+    }
+        .sidebar .nav .nav-item.active > .nav-link .menu-title {
+                color:black!important;
+        }
+    .sidebar .nav.sub-menu .nav-item .nav-link.active {
+        color:black!important;
+
+    }
+    .sidebar .nav .nav-item .nav-link i.menu-arrow:before{
+        color:black!important;
+    }
+    .sidebar .nav.sub-menu {
+    background-color:
+    }
+.card-body {
+    background: white !important
+}
+.table-dark {
+    background-color:white!important;
+}
+.justify-content-center {
+    background: white !important
+}
+.footer {
+    background-color: white !important;
+}
+.breadcrumb-item.active {
+    background-color: white !important;
+}
+.navbar {
+
+}
+.main-panel {
+    background-color: white !important;
+    color:black!important;
+}
+.input-product {
+    background-color:white!important;
+    color:black!important;
+}
+.note-editor.note-frame {
+    background-color: white !important;
+    color: black !important;
+}
+.navbar .navbar-menu-wrapper {
+    background-color: white !important;
+}
+.mdi-view-grid::before{
+    color:black;
+}
+.mdi-email::before {
+    color: black;
+}
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item .nav-link i {
+    color: black;
+}
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item .nav-link .navbar-profile .navbar-profile-name{
+    color:black;
+}

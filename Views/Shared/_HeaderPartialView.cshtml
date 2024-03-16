@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Title</title>
+    <link rel="stylesheet" href="~/assetsUser/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/assetsUser/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/assetsUser/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/assetsUser/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/assetsUser/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="~/assetsUser/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/assetsUser/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/assetsUser/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/assetsUser/css/style.css" type="text/css">
+    <!-- Nếu bạn có các tệp CSS tùy chỉnh khác, bạn cũng có thể thêm chúng ở đây -->
+</head>
+<body>
+    <!-- Nội dung của trang web của bạn -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><i class="fa fa-envelope"></i> 3DOCompany@gmail.com</li>
+                                <li>Miễn phí cho đơn hàng trên 2 triệu</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social">
+                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                            </div>
+                            <div class="header__top__right__language">
+                                <img src="" alt="">
+                                <div>English</div>
+                                <span class="arrow_carrot-down"></span>
+                                <ul>
+                                    <li><a href="#">Spanis</a></li>
+                                    <li><a href="#">English</a></li>
+                                </ul>
+                            </div>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="header__top__right__auth">
+                                    <a href="tai-khoan-cua-toi.html"><i class="fa fa-user"></i> Tài Khoản</a>
+                                </div>
+                                <div class="header__top__right__auth">
+                                    <a href="dang-xuat.html"> | Đăng Xuất</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="header__top__right__auth">
+                                    <a href="dang-nhap.html"><i class="fa fa-user"></i> Đăng nhập</a>
+                                </div>
+                            }
+
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="/" style="display: flex; justify-content: center; align-items: center;">
+                            <img src="/images/image.jpg" alt="" width="150" height="80">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class="active"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li><a asp-controller="Product" asp-action="Index">Shop</a></li>
+                            <li>
+                                <a asp-controller="Home" asp-action="About">About</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Blog" asp-action="Index">Blog</a>
+                            </li>
+                            <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                @await Component.InvokeAsync("NumberCart")
+
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+</body>
+
+<script src="https://kit.fontawesome.com/82858311fd.js" crossorigin="anonymous"></script>
+
+</html>
+
