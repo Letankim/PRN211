@@ -24,6 +24,7 @@ namespace WebApplication1.Models
         public DateTime? PaymenDate { get; set; }
         public int? PaymentId { get; set; }
         public string Note { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual Location Location { get; set; }

@@ -22,7 +22,7 @@ namespace WebApplication1.Models
 
         [Required(ErrorMessage = "Giá không được để trống")]
         [RegularExpression(@"^\d+$", ErrorMessage = "Giá chỉ được phép nhập số")]
-        public int? Price {   get; set; }
+        public double Price {   get; set; }
 
         [RegularExpression(@"^\d+$", ErrorMessage = "Chỉ được phép nhập số")]
         public int? Discount { get; set; }
@@ -40,5 +40,7 @@ namespace WebApplication1.Models
         public string MetaKey { get; set; }
         public int? UnitslnStock { get; set; }
         public virtual Category Cat { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+
     }
 }

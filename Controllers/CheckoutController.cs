@@ -91,7 +91,7 @@ namespace WebApplication1.Controllers
                     donhang.Deleted = false;
                     donhang.Paid= false;
                     donhang.Note = Ultilities.StripHTML(model.Note);
-                    donhang.TotalMoney = Convert.ToInt32(cart.Sum(x => x.TotalMoney));
+                    donhang.TotalMoney = cart.Sum(x => x.TotalMoney);
                     _context.Update(donhang);
                     _context.SaveChanges();
 

@@ -28,12 +28,12 @@
                     <td class="shoping__cart__quantity">
                         <div class="quantity">
                             <div class="pro-qty">
-                                <input type="text" value="@item.product.Price.Value.ToString("#,##0")VND>
+                                <input type="text" value="@item.product.Price.ToString("#,##0")VND>
                             </div>
                         </div>
                     </td>
                     <td class="shoping__cart__total">
-                                <input data-mahh="@item.product.ProductId" data-dongia="@item.amount x @item.product.Price.Value.ToString("#,##0")VND" />
+                                <input data-mahh="@item.product.ProductId" data-dongia="@item.amount x @item.product.Price.ToString("#,##0")VND" />
                     </td>
                     <td class="shoping__cart__item__close">
                         <span class="icon_close"></span>
