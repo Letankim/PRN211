@@ -16,8 +16,6 @@ namespace WebApplication1.Models
         public int? Levels { get; set; }
         public int? Ordering { get; set; }
         public bool Published { get; set; }
-
-        [Required(ErrorMessage = "Hình ảnh không được để trống")]
         public string Thumb { get; set; }
         public string Title { get; set; }
         public string Alias { get; set; }

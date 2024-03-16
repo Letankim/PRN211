@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PagedList.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebApplication1.Models;
@@ -46,24 +47,24 @@ namespace WebApplication1.Controllers
         }
         public IActionResult Index(int? page)
         {
-
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 20;
+            var pageSize = 1;
             var lsProduct = _context.Products
                 .AsNoTracking().Include(p => p.Cat)
+                .Where(p => (p.Active && p.Cat.Published))
                 .OrderByDescending(x => x.ProductId);
-
-            var lsBlog = _context.Categories
+            var lsCat = _context.Categories
                 .AsNoTracking()
                 .OrderByDescending(x => x.CatId)
-                .Select(x => x.CatName) 
                 .ToList();
-            ViewBag.Categories = lsBlog;
+            ViewBag.Categories = lsCat;
             PagedList<Product> models = new PagedList<Product>(lsProduct, pageNumber, pageSize);
-
             ViewBag.CurrentPage = pageNumber;
+            ViewBag.numberOfProduct = lsProduct.Count();
             return View(models);
         }
+
+
         [HttpGet("Product/Category/{catId}")]
         public IActionResult Category(int catId, int? page)
         {
@@ -71,14 +72,68 @@ namespace WebApplication1.Controllers
             var pageSize = 20;
             var lsProduct = _context.Products
                 .AsNoTracking().Include(p => p.Cat)
-                .Where(p => p.CatId == catId)
+                .Where(p => (p.CatId == catId && p.Cat.Published))
                 .OrderByDescending(x => x.ProductId);
             ViewBag.catId = catId;
-            var lsBlog = _context.Categories.AsNoTracking().OrderByDescending(x => x.CatId).Select(x => x.CatName).ToList();
+            var lsBlog = _context.Categories
+            .AsNoTracking()
+            .OrderByDescending(x => x.CatId)
+            .ToList();
             ViewBag.Categories = lsBlog;
             PagedList<Product> models = new PagedList<Product>(lsProduct, pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;
+            ViewBag.numberOfProduct = models.Count();
             return View("Index", models);
+        }
+
+        public IActionResult Search(string key)
+        {
+            var lsProduct = _context.Products
+            .AsNoTracking()
+            .Include(p => p.Cat)
+            .Where(p => p.Active && p.Cat.Published);
+            if (!String.IsNullOrEmpty(key))
+            {
+                lsProduct = lsProduct.Where(p => p.ProductName.Contains(key));
+            }
+            lsProduct = lsProduct.OrderByDescending(x => x.ProductId);
+            var lsBlog = _context.Categories.
+                    AsNoTracking()
+                    .OrderByDescending(x => x.CatId)
+                    .ToList();
+            ViewBag.SearchString = key;
+            ViewBag.Categories = lsBlog;
+            ViewBag.numberOfProduct = lsProduct.Count();
+            return View(lsProduct);
+        }
+
+        public IActionResult SortByPrice(int sortOrder)
+        {
+            var lsProduct = _context.Products
+                .AsNoTracking()
+                .Include(p => p.Cat)
+                .Where(p => p.Active && p.Cat.Published);
+            switch (sortOrder)
+            {
+                case 0:
+                    lsProduct = lsProduct.OrderByDescending(p => p.Price);
+                    break;
+                case 1:
+                    lsProduct = lsProduct.OrderBy(p => p.Price);
+                    break;
+            }
+            if (sortOrder != 0 && sortOrder != 1)
+            {
+                lsProduct = lsProduct.OrderByDescending(x => x.ProductId);
+            }
+            var lsBlog = _context.Categories
+                .AsNoTracking()
+                .OrderByDescending(x => x.CatId)
+                .ToList();
+            ViewBag.Sort = sortOrder;
+            ViewBag.Categories = lsBlog;
+            ViewBag.numberOfProduct = lsProduct.Count();
+            return View(lsProduct.ToList());
         }
 
         public IActionResult Details(int id)

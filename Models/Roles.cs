@@ -12,6 +12,5 @@ namespace WebApplication1.Models
         public string RoleName { get; set; }
         public string Description { get; set; }
         public virtual ICollection<Account> Accounts { get; set; }
-
     }
 }
