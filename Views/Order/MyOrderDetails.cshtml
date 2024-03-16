@@ -1,18 +1,74 @@
 ﻿
 @{
     ViewData["Title"] = "MyOrderDetails";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<Style>
+    .title {
+        text-align: center;
+        background-color: #df8787;
+        width: 25%;
+        margin: 30px auto; /* Căn giữa theo chiều ngang */
+        color: white;
+        padding: 5px 5px;
+    }
+
+    .order-table {
+        width: 90%;
+        border-collapse: collapse;
+        margin: 0 auto;
+    }
+
+        .order-table th, .order-table td {
+            border: 1px solid #eeebeb;
+            padding: 8px;
+            text-align: left;
+            padding: 20px 0 20px 20px;
+        }
+
+        .order-table th {
+            background-color: #e8e2ea;
+        }
+
+        .order-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .order-table tr:hover {
+            background-color: #ddd;
+        }
+
+    .btn.btn-primary {
+        font-weight: 700;
+        background-color: #8ac2ff;
+        color: #3c3737;
+        margin: 0 auto;
+    }
+
+    .btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</Style>
+<h3 class="title">Chi Tiết Đơn Hàng </h3>
 
 @if (Model.Count > 0)
 {
-    <table class="order-details-table">
+    <table class="order-table">
         <thead>
             <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
+                <th>Sản Phẩm</th>
+                <th>Ngày gửi</th>
+                <th>Số Lượng</th>
+                <th>Giá</th>
+                <th>Tổng Tiền</th>
                 <!-- Thêm các cột khác tùy theo nhu cầu -->
             </tr>
         </thead>
@@ -21,6 +77,7 @@
             {
                 <tr>
                     <td>@orderDetail.Product.ProductName</td>
+                    <td>@orderDetail.ShipDate</td>
                     <td>@orderDetail.Quantity</td>
                     <td>@orderDetail.Price</td>
                     <td>@orderDetail.Total</td>

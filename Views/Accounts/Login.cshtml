@@ -4,35 +4,109 @@
     ViewData["Title"] = "DangNhap";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .hello {
+        background-image: url('https://cdn.shopvnb.com//uploads/gallery/vot-cau-long-yonex-nanoflare-800-pro-chinh-hang-1_1699384846.webp');
+        background-size: cover;
+        background-position: center; 
+        background-repeat: no-repeat; 
+        width:100%;
+        height:80%;
+    }
 
-<h1>Login</h1>
+    .form-control {
+        width:100%;
+    }
+    .login {
+        background-color: #ffffff;
+        height: 70%;
+        margin:auto auto;
+        border: 1px solid #ffffff;
+        border-radius: 25px;
+    }
+    .btn.btn-primary{
+        width:100%;
+        background-color:black;
+        font-weight:700;
+        font-size: 16px !important;
+    }
+ .h2 {
+     margin-top:50px;
 
-<h4>LoginViewModel</h4>
+ }
+ .us {
+     padding: 10px 10px;
+     margin-top:30px;
+ }
+ .lo  {
+text-align:center;
+ margin-top:20px;
+    }
+
+    .social-login {
+        display: flex;
+        margin-top: 10px;
+    }
+
+    .social-login-item {
+        display: flex;
+        align-items: center;
+        border: 1px solid black;
+        padding:1px 40px 1px 40px;
+        margin: 0 auto;
+    }
+
+    .social-logo {
+        width: 30px;
+    }
+
+    .divider {
+        border: 0;
+        height: 1px;
+        background-color: #ccc; /* Màu sắc của đường gạch */
+        margin-top: 10px; /* Khoảng cách giữa đường gạch và các phần tử khác */
+    }
+</style>
+
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row hello">
+
+    <div class="col-md-4 login">
+        <h2 class="lo" >Đăng Nhập</h2>
         <form asp-action="Login">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
+               
+                <input asp-for="Username" class="form-control us" placeholder="Nhập Email" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" type="password"/>
+                <input asp-for="Password" class="form-control" type="password" placeholder="Mật Khẩu" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
           
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Đăng Nhập" class="btn btn-primary" />
+            </div>
+            <a >Quên mật khẩu</a>
+            <hr class="divider">
+
+            <div class="social-login">
+                <!-- Logo Google -->
+                <div class="social-login-item">
+                    <img src="./images/facebook-color-svgrepo-com.png" alt="Google Logo" class="social-logo">
+                    <a href="#" class="btn btn-hello">Facebook</a>
+                </div>
+
+                <!-- Logo Facebook -->
+                <div class="social-login-item">
+                    <img src="./images/google-color-svgrepo-com.png" alt="Facebook Logo" class="social-logo">
+                    <a href="#" class="btn btn-hello">Google</a>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 

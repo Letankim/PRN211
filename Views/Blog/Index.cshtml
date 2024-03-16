@@ -1,5 +1,5 @@
-﻿@using PagedList.Core.Mvc
-@model PagedList.Core.IPagedList<WebApplication1.Models.TbTinTuc>
+﻿@model List<WebApplication1.Models.TbTinTuc>
+
 @{
     ViewData["Title"] = "Blog Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -86,6 +86,9 @@
                             <button type="submit"><span class="icon_search"></span></button>
                         </form>
                     </div>
+                 
+
+                  
                     <div class="blog__sidebar__item">
                         <h4>Categories</h4>
                         <ul>
@@ -143,23 +146,24 @@
             </div>
             <div class="col-lg-8 col-md-7">
                 <div class="row">
-                    @if (Model != null && Model.Count() > 0)
+                    @if (Model != null)
                     {
-                        foreach (var item in Model)
+                        @foreach (var tinTuc in Model)
                         {
-                            string url = $"/tin-tuc/{item.Alias}-{item.PostId}.html";
+
+                            string url = $"/tin-tuc/{tinTuc.Alias}-{tinTuc.PostId}.html";
 
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="blog__item">
                                     <div class="blog__item__pic">
-                                        <img src="~/images/tbTinTucs/@item.Thumb" alt="@item.Title">
+                                        <img src="~/images/tbTinTucs/@tinTuc.Thumb" alt="@tinTuc.Title">
                                     </div>
                                     <div class="blog__item__text">
                                         <ul>
-                                            <li><i class="fa fa-calendar-o"></i> @item.CreatedDate.Value.ToShortDateString()</li>
+                                            <li><i class="fa fa-calendar-o"></i> @tinTuc.CreatedDate?.ToShortDateString()</li>
                                             <li><i class="fa fa-comment-o"></i> 5</li>
                                         </ul>
-                                        <h5><a href="@url">@item.Title</a></h5>
+                                        <h5><a href="@url">@tinTuc.Title</a></h5>
                                         <p>
                                             Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam
                                             quaerat
@@ -170,9 +174,9 @@
                                 </div>
                             </div>
                         }
+
                     }
 
-                    
                     
                     <div class="col-lg-12">
                         <div class="product__pagination blog__pagination">

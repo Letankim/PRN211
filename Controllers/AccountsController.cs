@@ -198,7 +198,6 @@ namespace WebApplication1.Controllers
         [Route("dang-xuat.html", Name ="Logout")]
         public IActionResult Logout()
         {
-            HttpContext.SignOutAsync();
             HttpContext.Session.Remove("CustoemrId");
             return RedirectToAction("Index", "Home");
         }

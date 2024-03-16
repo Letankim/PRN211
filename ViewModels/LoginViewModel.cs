@@ -6,15 +6,15 @@ namespace WebApplication1.ViewModels
     {
         [Key]
         [MaxLength(100)]
-        [Required(ErrorMessage ="Vui long Nhap So dien thoai hoac Email")]
-        [Display(Name ="Dien thoai/ Email")]
+        [Required(ErrorMessage ="Vui lòng nhập Email")]
+        [Display(Name ="Email")]
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string Username { get; set; }
 
-        [Display(Name ="Mat Khau")]
-        [Required(ErrorMessage = "Vui long nhap mat khau")]
-        [MinLength(5, ErrorMessage = "Ban can dat mat khau toi thieu 5 ky tu")]
+        [Display(Name ="Mật khẩu")]
+        [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
+        [MinLength(5, ErrorMessage = "Bạn cần đặt mật khẩu tối thiểu 5 ký tự")]
         public string Password { get; set; }    
 
 

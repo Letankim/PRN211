@@ -1,19 +1,31 @@
 ﻿@model List<WebApplication1.Models.Order>
     <Style>
+    .title {
+        text-align: center;
+        background-color: #df8787;
+        width: 25%;
+        margin: 30px auto; /* Căn giữa theo chiều ngang */
+        color:white;
+        padding:5px 5px;
+        
+    }
         .order-table {
-            width: 100%;
+            
+            width: 90%;
             border-collapse: collapse;
-        }
+            margin:0 auto;
+    }
 
             .order-table th, .order-table td {
-                border: 1px solid #ddd;
+            border: 1px solid #eeebeb;
                 padding: 8px;
                 text-align: left;
-            }
+                padding:20px 0 20px 20px;
+        }
 
             .order-table th {
-                background-color: #f2f2f2;
-            }
+            background-color: #e8e2ea;
+        }
 
             .order-table tr:nth-child(even) {
                 background-color: #f2f2f2;
@@ -22,29 +34,48 @@
             .order-table tr:hover {
                 background-color: #ddd;
             }
+
+    .btn.btn-primary{
+        font-weight:700;
+        background-color: #8ac2ff;
+        color: #3c3737;
+        margin: 0 auto;
+    }
+
+    .btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     </Style>
-    <h1>My Orders</h1>
+    <h3 class="title">Đơn hàng </h3>
     @if (Model.Count > 0)
     {
         <table class="order-table">
             <thead>
                 <tr>
-                    <th>Order ID</th>
-               
-                    <th>Total Money</th>
-                    <th>Order Date</th>
-                    <!-- Thêm các cột khác tùy theo nhu cầu -->
+                <th>Địa chỉ đặt hàng</th>
+                <th>Ngày đặt</th>
+                <th>Tổng Tiền</th>
+                <th class="btn1">Xem chi tiết đơn hàng</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var order in Model)
                 {
                     <tr>
-                        <td>@order.OrderID</td>
                  
-                        <td>@order.TotalMoney</td>
+                        <td>@order.Address</td>
                         <td>@order.OrderDate</td>
-                    <td><a asp-action="MyOrderDetails" asp-controller="Order" asp-route-orderId="@order.OrderID">Xem Đơn Hàng </a></td>
+                        <td>@order.TotalMoney</td>
+
+                    <td class="btn"><a class="btn btn-primary" asp-action="MyOrderDetails" asp-controller="Order" asp-route-orderId="@order.OrderID">Xem Đơn Hàng </a></td>
 
                         <!-- Thêm các ô dữ liệu khác tùy theo nhu cầu -->
                     </tr>

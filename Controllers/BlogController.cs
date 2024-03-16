@@ -14,29 +14,28 @@ namespace WebApplication1.Controllers
         {
             _context = context;
         }
-        [Route("blogs.html", Name="Blog")]
-        public IActionResult Index(int? page)
-        {
 
-            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 20;
+        [Route("blogs.html", Name = "Blog")]
+        public IActionResult Index()
+        {
             var lsTinTucs = _context.TbTinTucs
                 .AsNoTracking()
-                .OrderByDescending(x => x.PostId);
-            PagedList<TbTinTuc> models = new PagedList<TbTinTuc>(lsTinTucs, pageNumber, pageSize);
+                .OrderByDescending(x => x.PostId)
+                .ToList();
 
-            ViewBag.CurrentPage = pageNumber;
-            return View(models);
+            return View(lsTinTucs);
         }
-        [Route("/tin-tuc/{Alias}-{id}.html", Name ="TinDetails")]
-        public IActionResult Details(int id)
+
+        [Route("/tin-tuc/{Alias}-{id}.html", Name = "TinDetails")]
+        public IActionResult Details(string Alias, int id)
         {
-            var tinTuc = _context.TbTinTucs.AsNoTracking().SingleOrDefault(x=>x.PostId== id);
+            var tinTuc = _context.TbTinTucs.AsNoTracking().SingleOrDefault(x => x.PostId == id && x.Alias == Alias);
 
             if (tinTuc == null)
             {
                 return RedirectToAction("Index");
             }
+
             return View(tinTuc);
         }
     }

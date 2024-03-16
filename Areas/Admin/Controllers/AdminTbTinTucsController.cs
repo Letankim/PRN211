@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using PagedList.Core;
 using WebApplication1.Helper;
@@ -78,6 +79,7 @@ namespace WebApplication1.Areas.Admin.Controllers
                     tbTinTuc.Thumb = await Ultilities.UploadFile(fThumb, @"tbTinTucs", imageName.ToLower());
                 }
                 if (string.IsNullOrEmpty(tbTinTuc.Thumb)) tbTinTuc.Thumb = "default.jpg";
+                tbTinTuc.Alias = Ultilities.SEOUrl(tbTinTuc.Title);
 
                 tbTinTuc.CreatedDate = DateTime.Now;
                 _context.Add(tbTinTuc);
@@ -129,7 +131,9 @@ namespace WebApplication1.Areas.Admin.Controllers
                     }
                     if (string.IsNullOrEmpty(tbTinTuc.Thumb))
                         tbTinTuc.Thumb = "default.jpg";
+
                     tbTinTuc.CreatedDate = DateTime.Now;
+                    tbTinTuc.Alias = Ultilities.SEOUrl(tbTinTuc.Title);
 
                     _context.Update(tbTinTuc);
                     await _context.SaveChangesAsync();
