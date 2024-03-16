@@ -17,7 +17,7 @@ namespace WebApplication1.Controllers
     {
         private readonly Se1708Context _context;
 
-     
+
         public HomeController(Se1708Context context)
         {
             _context = context;
@@ -32,19 +32,17 @@ namespace WebApplication1.Controllers
                 OrderByDescending(x => x.CatId).ToList();
             ViewBag.Categories = lsBlog;
 
-            var lsTintuc =_context.TbTinTucs.
+            var lsTintuc = _context.TbTinTucs.
                 AsNoTracking().
-                OrderByDescending(x=> x.PostId).ToList();
+                OrderByDescending(x => x.PostId).ToList();
             ViewBag.TbTinTucs = lsTintuc;
 
             var lsProduct = _context.Products
                 .AsNoTracking()
+                .Where(p => p.Active && p.Cat.Published)
                 .OrderByDescending(x => x.ProductId)
-                .Include(p => p.Cat); // Thực hiện join vào bảng Category
-                 PagedList<Product> models = new PagedList<Product>(lsProduct, pageNumber, pageSize);
-
-
-
+                .Include(p => p.Cat);
+            PagedList<Product> models = new PagedList<Product>(lsProduct, pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;
             return View(models);
         }
@@ -55,19 +53,15 @@ namespace WebApplication1.Controllers
             {
                 var pageSize = 10;
                 var danhMuc = _context.Categories.Find(CatID);
-
-                // Thực hiện join vào bảng Category và lọc dữ liệu theo CatId
                 var lsTinDangs = _context.Products
                     .AsNoTracking()
                      .Include(p => p.Cat)
                     .Where(x => x.CatId == CatID)
                     .OrderByDescending(x => x.DateCreated)
-                  
-                    ; 
-
+                    ;
                 PagedList<Product> models = new PagedList<Product>(lsTinDangs, page, pageSize);
                 ViewBag.CurrentPage = page;
-                ViewBag.CurrentCategory = danhMuc.CatName; // Trả về tên danh mục
+                ViewBag.CurrentCategory = danhMuc.CatName;
                 return View(models);
             }
             catch
@@ -75,7 +69,7 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-       
+
 
         public IActionResult Contact()
         {
