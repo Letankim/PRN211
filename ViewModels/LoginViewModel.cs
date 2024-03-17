@@ -16,7 +16,5 @@ namespace WebApplication1.ViewModels
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [MinLength(5, ErrorMessage = "Bạn cần đặt mật khẩu tối thiểu 5 ký tự")]
         public string Password { get; set; }    
-
-
     }
 }

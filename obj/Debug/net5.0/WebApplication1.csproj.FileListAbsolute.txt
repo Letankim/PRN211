@@ -1578,3 +1578,4 @@ E:\FPT\SP24\PRN211\Assigments\WebApplication1\WebApplication1\obj\Debug\net5.0\R
 E:\FPT\SP24\PRN211\Assigments\WebApplication1\WebApplication1\obj\Debug\net5.0\Razor\Views\Product\SortByPrice.cshtml.g.cs
 D:\WebsiteBadminton\PRN211\obj\Debug\net5.0\Razor\Views\Product\Search.cshtml.g.cs
 D:\WebsiteBadminton\PRN211\obj\Debug\net5.0\Razor\Views\Product\SortByPrice.cshtml.g.cs
+E:\FPT\SP24\PRN211\Assigments\WebApplication1\WebApplication1\obj\Debug\net5.0\Razor\Views\Accounts\ForgetPassword.cshtml.g.cs

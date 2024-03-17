@@ -136,6 +136,42 @@ namespace WebApplication1.Controllers
             return View(lsProduct.ToList());
         }
 
+        public IActionResult FilterProduct(int[] categories, float minamount, float maxamount)
+        {
+            List<int?> categoryList = categories.Cast<int?>().ToList();
+            var lsProduct = _context.Products
+                .AsNoTracking()
+                .Include(p => p.Cat)
+                .Where(p => p.Active && p.Cat.Published);
+            if (categories != null && categories.Length > 0)
+            {
+                lsProduct = lsProduct.Where(p => categoryList.Contains(p.CatId));
+            }
+
+            if (minamount != null && minamount >= 0)
+            {
+                lsProduct = lsProduct.Where(p => p.Price >= minamount);
+            }
+
+            if (maxamount != 0 && maxamount >= minamount)
+            {
+                lsProduct = lsProduct.Where(p => p.Price <= maxamount);
+            }
+            lsProduct.OrderBy(p => p.ProductId)
+            .ToList();
+            var lsBlog = _context.Categories
+                .AsNoTracking()
+                .OrderByDescending(x => x.CatId)
+                .ToList();
+            ViewBag.minamount = minamount;
+            ViewBag.maxamount = maxamount;
+            ViewBag.categoryFilter = categories;
+            ViewBag.Categories = lsBlog;
+            ViewBag.numberOfProduct = lsProduct.Count();
+            return View("Search", lsProduct);
+
+        }
+
         public IActionResult Details(int id)
         {
             var product = _context.Products.Include(x => x.Cat).FirstOrDefault(x => x.ProductId == id);

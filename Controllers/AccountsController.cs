@@ -32,7 +32,7 @@ namespace WebApplication1.Controllers
             {
                 var khachhang = _context.Customers.AsNoTracking().SingleOrDefault(x => x.Phone.ToLower() == Phone.ToLower());
                 if (khachhang != null)
-                    return Json(data: "So dien thoai: " + Phone + "Da duoc su dung");
+                    return Json(data: "Số điện thoại: " + Phone + " Đã được sử dụng");
                 return Json(data: true);
 
             }
@@ -49,7 +49,7 @@ namespace WebApplication1.Controllers
             {
                 var khachhang = _context.Customers.AsNoTracking().SingleOrDefault(x => x.Email.ToLower() == Email.ToLower());
                 if (khachhang != null)
-                    return Json(data: "Email" + Email + " Da duoc su dung");
+                    return Json(data: "Email" + Email + " Đã được sử dụng");
                 return Json(data: true);
             }
             catch
@@ -61,13 +61,13 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-   
-      
+
+
         [Route("tai-khoan-cua-toi.html", Name = "DashBoard")]
         public IActionResult DashBoard()
         {
             var taikhoanID = HttpContext.Session.GetString("CustomerId");
-            if (taikhoanID !=null)
+            if (taikhoanID != null)
             {
                 var khachhang = _context.Customers.AsNoTracking().SingleOrDefault(x => x.CustomerId == Convert.ToInt32(taikhoanID));
                 if (khachhang != null)
@@ -79,14 +79,14 @@ namespace WebApplication1.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        [Route("dang-ky.html", Name ="DangKy")]
+        [Route("dang-ky.html", Name = "DangKy")]
         public IActionResult DangKyTaiKhoan()
         {
             return View();
         }
         [HttpPost]
         [AllowAnonymous]
-        [Route("dang-ky.html", Name ="DangKy")]
+        [Route("dang-ky.html", Name = "DangKy")]
         public async Task<IActionResult> DangKyTaiKhoan(RegisterVMcs taikhoan)
         {
             try
@@ -95,13 +95,14 @@ namespace WebApplication1.Controllers
                 {
                     string salt = Ultilities.GetRandomKey();
                     Customer khachang = new Customer
-                    {FullName=taikhoan.FullName,
-                    Phone = taikhoan.Phone.Trim().ToLower(),
-                    Email =taikhoan.Email.Trim().ToLower(),
-                    Password= taikhoan.Password + salt.Trim().ToMD5(),
-                    Active = true , 
-                    Salt = salt, 
-                    CreateDate= DateTime.Now
+                    {
+                        FullName = taikhoan.FullName,
+                        Phone = taikhoan.Phone.Trim().ToLower(),
+                        Email = taikhoan.Email.Trim().ToLower(),
+                        Password = taikhoan.Password + salt.Trim().ToMD5(),
+                        Active = true,
+                        Salt = salt,
+                        CreateDate = DateTime.Now
                     };
                     try
                     {
@@ -138,9 +139,8 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [AllowAnonymous]
-        [Route("dang-nhap.html" , Name ="DangNhap")]
-        public IActionResult Login(string returnUrl = null)
+        [HttpGet]
+        public IActionResult Login()
         {
             var taikhoanID = HttpContext.Session.GetString("CustomerId");
             if (taikhoanID != null)
@@ -151,27 +151,23 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        [Route("dang-nhap.html", Name ="DangNhap")]
-        public async Task<IActionResult> Login(LoginViewModel customer , string returnUrl= null)
+        public async Task<IActionResult> Login(LoginViewModel customer)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     bool isEmail = Ultilities.IsValidEmail(customer.Username);
-                    if (!isEmail)  return View(customer);
+                    if (!isEmail) return View(customer);
                     var khachhang = _context.Customers.AsNoTracking().SingleOrDefault(x => x.Email.Trim() == customer.Username);
                     if (khachhang == null) return RedirectToAction("DangKyTaiKhoan");
-
                     string pass = (customer.Password + khachhang.Salt.Trim().ToMD5());
-                 
                     if (khachhang.Password != pass)
                     {
                         return View(customer);
                     }
                     if (khachhang.Active == false) return RedirectToAction("ThongBao", "Accounts");
-                    
+
                     HttpContext.Session.SetString("CustomerId", khachhang.CustomerId.ToString());
                     var taikhoanID = HttpContext.Session.GetString("CustomerId");
                     var claims = new List<Claim>
@@ -184,18 +180,29 @@ namespace WebApplication1.Controllers
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                     await HttpContext.SignInAsync(claimsPrincipal);
                     return RedirectToAction("Index", "Home");
-                    
-
-                    }
                 }
+            }
             catch
             {
                 return RedirectToAction("DangKyTaiKhoan", "Accounts");
             }
             return View(customer);
         }
+
         [HttpGet]
-        [Route("dang-xuat.html", Name ="Logout")]
+        public IActionResult ForgetPassword()
+        {
+            var taikhoanID = HttpContext.Session.GetString("CustomerId");
+            if (taikhoanID != null)
+            {
+                return RedirectToAction("DashBoard", "Accounts");
+            }
+            return View();
+        }
+
+
+
+        [HttpGet]
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("CustoemrId");
@@ -216,9 +223,6 @@ namespace WebApplication1.Controllers
             return View(customer);
         }
 
-        // POST: Admin/AdminCustomers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CustomerId,FullName,Birthday,Avatar,Address,Email,Phone,LocationId,District,Ward,CreateDate,Password,Salt,LastLogin,Active")] Customer customer)
