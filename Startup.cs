@@ -42,13 +42,6 @@ namespace WebApplication1
                 cfg.Cookie.Name = "Thang";             // Đặt tên Session - tên này sử dụng ở Browser (Cookie)
                 cfg.IdleTimeout = new TimeSpan(0, 30, 0);    // Thời gian tồn tại của Session
             });
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie
-            (p =>
-            {
-                p.LoginPath = "/dang-nhap.html";
-                p.AccessDeniedPath = "/";
-            });
-            
 
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
